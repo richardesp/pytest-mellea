@@ -38,4 +38,8 @@ def test_similarity_uses_cosine_dot_product() -> None:
     encoder = EmbeddingEncoder(backend=FakeBackend())
 
     assert math.isclose(encoder.similarity("redis", "cache"), 1.0)
-    assert math.isclose(encoder.similarity("redis", "orthogonal"), 0.0)
+    assert math.isclose(
+        encoder.similarity("redis", "orthogonal"),
+        0.0,
+        abs_tol=1e-12,
+    )
