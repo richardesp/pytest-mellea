@@ -29,12 +29,12 @@ requires_ollama = pytest.mark.skipif(
     not _ollama_available(), reason="Ollama is not running on 127.0.0.1:11434"
 )
 requires_embed_model = pytest.mark.skipif(
-    not _model_available("nomic-embed-text"),
-    reason="Embedding model unavailable. Run: ollama pull nomic-embed-text:v1.5",
+    not _model_available("granite-embedding:278m"),
+    reason="Embedding model unavailable. Run: ollama pull granite-embedding:278m",
 )
 requires_judge_model = pytest.mark.skipif(
-    not _model_available("gemma4:e2b"),
-    reason="Judge model unavailable. Run: ollama pull gemma4:e2b",
+    not _model_available("granite4.1:3b"),
+    reason="Judge model unavailable. Run: ollama pull granite4.1:3b",
 )
 
 

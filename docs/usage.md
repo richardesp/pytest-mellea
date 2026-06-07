@@ -9,9 +9,12 @@ uv add pytest-mellea-semantic
 Pull the default local models when using the default Ollama-backed runtime:
 
 ```bash
-ollama pull nomic-embed-text:v1.5
-ollama pull gemma4:e2b
+ollama pull granite-embedding:278m
+ollama pull granite4.1:3b
 ```
+
+The Granite defaults align the plugin with Mellea's default local model family,
+avoiding an additional judge-model download for an existing Mellea setup.
 
 Then write normal pytest assertions:
 

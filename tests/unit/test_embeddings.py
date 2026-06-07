@@ -1,8 +1,10 @@
 import math
+from types import SimpleNamespace
 
+import ollama
 import pytest
 
-from pytest_mellea_semantic import EmbeddingEncoder
+from pytest_mellea_semantic import EmbeddingEncoder, OllamaEmbeddingBackend
 
 
 class FakeBackend:
@@ -19,6 +21,27 @@ class FakeBackend:
     def embed(self, text: str) -> list[float]:
         self.calls.append(text)
         return self.vectors[text]
+
+
+def test_ollama_backend_uses_granite_default(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls: list[tuple[str, str]] = []
+
+    class FakeClient:
+        def __init__(self, host: str | None = None) -> None:
+            assert host is None
+
+        def embed(self, *, model: str, input: str) -> SimpleNamespace:
+            calls.append((model, input))
+            return SimpleNamespace(embeddings=[[1.0, 0.0]])
+
+    monkeypatch.setattr(ollama, "Client", FakeClient)
+
+    backend = OllamaEmbeddingBackend()
+    backend.embed("redis")
+
+    assert calls == [("granite-embedding:278m", "redis")]
 
 
 def test_encoder_normalizes_vectors() -> None:

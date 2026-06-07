@@ -4,6 +4,7 @@ import pytest_mellea_semantic._runtime as runtime
 from pytest_mellea_semantic._constants import (
     DEFAULT_CACHE_SIZE,
     DEFAULT_ENCODER_MODEL,
+    DEFAULT_JUDGE_MODEL,
     DEFAULT_THRESHOLD,
 )
 from pytest_mellea_semantic._runtime import (
@@ -21,9 +22,13 @@ def setup_function() -> None:
 def test_runtime_defaults() -> None:
     config = get_config()
 
+    assert DEFAULT_THRESHOLD == 0.65
+    assert DEFAULT_ENCODER_MODEL == "granite-embedding:278m"
+    assert DEFAULT_JUDGE_MODEL == "granite4.1:3b"
     assert config.threshold == DEFAULT_THRESHOLD
     assert config.encoder_model == DEFAULT_ENCODER_MODEL
     assert config.cache_size == DEFAULT_CACHE_SIZE
+    assert config.judge_model == DEFAULT_JUDGE_MODEL
 
 
 def test_configure_updates_values() -> None:

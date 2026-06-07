@@ -10,7 +10,7 @@ import abc
 from collections import OrderedDict
 from typing import Protocol, cast
 
-from pytest_mellea_semantic._constants import DEFAULT_CACHE_SIZE
+from pytest_mellea_semantic._constants import DEFAULT_CACHE_SIZE, DEFAULT_ENCODER_MODEL
 from pytest_mellea_semantic._exceptions import SemanticAssertionRuntimeError
 
 
@@ -61,7 +61,7 @@ class OllamaEmbeddingBackend(EmbeddingBackend):
     """
 
     def __init__(
-        self, model_id: str = "nomic-embed-text:v1.5", host: str | None = None
+        self, model_id: str = DEFAULT_ENCODER_MODEL, host: str | None = None
     ) -> None:
         """Initialize the Ollama embedding backend."""
         try:
