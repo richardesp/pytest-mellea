@@ -27,12 +27,15 @@ mise run setup
 
 ## Default local models
 
-The default runtime uses Ollama:
+The default runtime uses Ollama with IBM Granite models:
 
 ```bash
-ollama pull nomic-embed-text:v1.5
-ollama pull gemma4:e2b
+ollama pull granite-embedding:278m
+ollama pull granite4.1:3b
 ```
+
+These defaults keep the plugin aligned with Mellea's default local Granite
+judge, so an existing Mellea setup does not need a second model family.
 
 ## Configuration
 
@@ -40,11 +43,11 @@ Pytest ini options:
 
 ```ini
 [pytest]
-mellea_semantic_threshold = 0.70
-mellea_semantic_encoder_model = nomic-embed-text:v1.5
+mellea_semantic_threshold = 0.65
+mellea_semantic_encoder_model = granite-embedding:278m
 mellea_semantic_cache_size = 1024
 mellea_semantic_judge_backend = ollama
-mellea_semantic_judge_model = gemma4:e2b
+mellea_semantic_judge_model = granite4.1:3b
 ```
 
 CLI options with the same names are available using hyphens, for example:
