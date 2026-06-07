@@ -31,6 +31,25 @@ def test_plugin_registers_marker(pytester: Pytester) -> None:
     result.assert_outcomes(passed=1)
 
 
+def test_plugin_applies_default_configuration(pytester: Pytester) -> None:
+    make_child_ini(pytester)
+    pytester.makepyfile(
+        """
+        from pytest_mellea_semantic._runtime import get_config
+
+        def test_config():
+            config = get_config()
+            assert config.threshold == 0.65
+            assert config.encoder_model == "granite-embedding:278m"
+            assert config.judge_model == "granite4.1:3b"
+        """
+    )
+
+    result = pytester.runpytest()
+
+    result.assert_outcomes(passed=1)
+
+
 def test_plugin_applies_ini_configuration(pytester: Pytester) -> None:
     make_child_ini(
         pytester,
