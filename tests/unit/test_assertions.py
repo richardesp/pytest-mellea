@@ -1,8 +1,8 @@
 from typing import Any
 
-import pytest_mellea_semantic
-from pytest_mellea_semantic import Behavior, Content, EmbeddingEncoder
-from pytest_mellea_semantic._runtime import reset_runtime
+import pytest_mellea
+from pytest_mellea import Behavior, Content, EmbeddingEncoder
+from pytest_mellea._runtime import reset_runtime
 
 
 class FakeEmbeddingBackend:
@@ -66,10 +66,10 @@ def test_content_threshold_controls_match() -> None:
 def test_public_api_exports_only_behavior_spelling() -> None:
     legacy_name = "Behav" + "iour"
 
-    assert pytest_mellea_semantic.Behavior is Behavior
-    assert "Behavior" in pytest_mellea_semantic.__all__
-    assert legacy_name not in pytest_mellea_semantic.__all__
-    assert not hasattr(pytest_mellea_semantic, legacy_name)
+    assert pytest_mellea.Behavior is Behavior
+    assert "Behavior" in pytest_mellea.__all__
+    assert legacy_name not in pytest_mellea.__all__
+    assert not hasattr(pytest_mellea, legacy_name)
 
 
 def test_behavior_uses_mellea_requirement_pipeline() -> None:

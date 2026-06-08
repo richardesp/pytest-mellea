@@ -4,7 +4,7 @@ from types import SimpleNamespace
 import ollama
 import pytest
 
-from pytest_mellea_semantic import EmbeddingEncoder, OllamaEmbeddingBackend
+from pytest_mellea import EmbeddingEncoder, OllamaEmbeddingBackend
 
 
 class FakeBackend:

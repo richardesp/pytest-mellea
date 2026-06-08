@@ -1,10 +1,10 @@
 # Design
 
-`pytest-mellea-semantic` is a thin pytest-native workflow layer over Mellea.
+`pytest-mellea` is a thin pytest-native workflow layer over Mellea.
 It is intentionally separate from Mellea's JSON-oriented `unit_test_eval` component:
 
 - `unit_test_eval` is for bulk/offline evaluation cases.
-- `pytest-mellea-semantic` is for inline assertions in ordinary Python test suites.
+- `pytest-mellea` is for inline assertions in ordinary Python test suites.
 
 The package exposes two assertion dimensions:
 

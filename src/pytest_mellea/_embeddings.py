@@ -10,8 +10,8 @@ import abc
 from collections import OrderedDict
 from typing import Protocol, cast
 
-from pytest_mellea_semantic._constants import DEFAULT_CACHE_SIZE, DEFAULT_ENCODER_MODEL
-from pytest_mellea_semantic._exceptions import SemanticAssertionRuntimeError
+from pytest_mellea._constants import DEFAULT_CACHE_SIZE, DEFAULT_ENCODER_MODEL
+from pytest_mellea._exceptions import SemanticAssertionRuntimeError
 
 
 class EmbeddingBackend(abc.ABC):

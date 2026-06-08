@@ -1,9 +1,9 @@
-# pytest-mellea-semantic
+# pytest-mellea
 
 Pytest-native semantic assertions powered by [Mellea](https://github.com/generative-computing/mellea).
 
 ```python
-from pytest_mellea_semantic import Behavior, Content
+from pytest_mellea import Behavior, Content
 
 assert "key-value store" in Content(response)
 assert "safety refusal" not in Behavior(response)
@@ -16,14 +16,14 @@ pipeline.
 ## Install
 
 ```bash
-uv add pytest-mellea-semantic
+uv add pytest-mellea
 ```
 
 For local development:
 
 ```bash
-git clone https://github.com/generative-computing/pytest-mellea-semantic.git
-cd pytest-mellea-semantic
+git clone https://github.com/generative-computing/pytest-mellea.git
+cd pytest-mellea
 mise run setup
 ```
 
@@ -69,7 +69,7 @@ package defaults. A custom encoder can set its own capacity independently and
 clear cached entries without changing its backend or configuration:
 
 ```python
-from pytest_mellea_semantic import EmbeddingEncoder
+from pytest_mellea import EmbeddingEncoder
 
 encoder = EmbeddingEncoder(max_cache_size=256)
 encoder.clear_cache()

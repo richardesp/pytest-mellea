@@ -35,7 +35,7 @@ def test_plugin_applies_default_configuration(pytester: Pytester) -> None:
     make_child_ini(pytester)
     pytester.makepyfile(
         """
-        from pytest_mellea_semantic._runtime import get_config
+        from pytest_mellea._runtime import get_config
 
         def test_config():
             config = get_config()
@@ -60,7 +60,7 @@ def test_plugin_applies_ini_configuration(pytester: Pytester) -> None:
     )
     pytester.makepyfile(
         """
-        from pytest_mellea_semantic._runtime import get_config
+        from pytest_mellea._runtime import get_config
 
         def test_config():
             assert get_config().threshold == 0.42
@@ -77,7 +77,7 @@ def test_plugin_cli_overrides_ini_configuration(pytester: Pytester) -> None:
     make_child_ini(pytester, "mellea_semantic_threshold = 0.42")
     pytester.makepyfile(
         """
-        from pytest_mellea_semantic._runtime import get_config
+        from pytest_mellea._runtime import get_config
 
         def test_config():
             assert get_config().threshold == 0.91
@@ -97,7 +97,7 @@ def test_plugin_environment_overrides_ini_cache_size(
     make_child_ini(pytester, "mellea_semantic_cache_size = 64")
     pytester.makepyfile(
         """
-        from pytest_mellea_semantic._runtime import get_config
+        from pytest_mellea._runtime import get_config
 
         def test_config():
             assert get_config().cache_size == 32
@@ -117,7 +117,7 @@ def test_plugin_cli_overrides_environment_cache_size(
     make_child_ini(pytester, "mellea_semantic_cache_size = 64")
     pytester.makepyfile(
         """
-        from pytest_mellea_semantic._runtime import get_config
+        from pytest_mellea._runtime import get_config
 
         def test_config():
             assert get_config().cache_size == 16
@@ -133,7 +133,7 @@ def test_plugin_assertion_output_for_content(pytester: Pytester) -> None:
     make_child_ini(pytester)
     pytester.makepyfile(
         """
-        from pytest_mellea_semantic import Content, EmbeddingEncoder
+        from pytest_mellea import Content, EmbeddingEncoder
 
         class Backend:
             def embed(self, text):
@@ -157,7 +157,7 @@ def test_plugin_assertion_output_for_behavior(pytester: Pytester) -> None:
     make_child_ini(pytester)
     pytester.makepyfile(
         """
-        from pytest_mellea_semantic import Behavior
+        from pytest_mellea import Behavior
 
         class Result:
             reason = "judge said no"

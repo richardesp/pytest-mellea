@@ -2,7 +2,7 @@ import socket
 
 import pytest
 
-from pytest_mellea_semantic import Behavior, Content
+from pytest_mellea import Behavior, Content
 
 pytestmark = [pytest.mark.e2e, pytest.mark.ollama, pytest.mark.semantic]
 
