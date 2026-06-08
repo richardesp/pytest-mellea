@@ -7,14 +7,14 @@ from typing import Any
 
 import pytest
 
-from pytest_mellea_semantic._constants import (
+from pytest_mellea._constants import (
     DEFAULT_CACHE_SIZE,
     DEFAULT_ENCODER_MODEL,
     DEFAULT_JUDGE_BACKEND,
     DEFAULT_JUDGE_MODEL,
     DEFAULT_THRESHOLD,
 )
-from pytest_mellea_semantic._runtime import configure
+from pytest_mellea._runtime import configure
 
 ENV_THRESHOLD = "MELLEA_SEMANTIC_THRESHOLD"
 ENV_ENCODER_MODEL = "MELLEA_SEMANTIC_ENCODER_MODEL"
@@ -108,9 +108,7 @@ def pytest_configure(config: pytest.Config) -> None:
     Args:
         config: Active pytest config object.
     """
-    config.addinivalue_line(
-        "markers", "semantic: tests using pytest-mellea-semantic assertions"
-    )
+    config.addinivalue_line("markers", "semantic: tests using pytest-mellea assertions")
     configure(**_config_from_pytest(config))
 
 
@@ -128,7 +126,7 @@ def pytest_assertrepr_compare(op: str, left: object, right: object) -> list[str]
     if op not in {"in", "not in"} or not isinstance(left, str):
         return None
 
-    from pytest_mellea_semantic import Behavior, Content
+    from pytest_mellea import Behavior, Content
 
     if isinstance(right, Content):
         lines = ["Semantic Content assertion failed"]
@@ -165,7 +163,7 @@ def _config_from_pytest(config: pytest.Config) -> dict[str, Any]:
         config: Active pytest configuration.
 
     Returns:
-        Keyword arguments accepted by `pytest_mellea_semantic._runtime.configure`.
+        Keyword arguments accepted by `pytest_mellea._runtime.configure`.
     """
     return {
         "threshold": _resolve_float(

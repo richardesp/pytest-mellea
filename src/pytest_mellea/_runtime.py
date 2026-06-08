@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 from typing import Any, Literal, cast
 
-from pytest_mellea_semantic._constants import (
+from pytest_mellea._constants import (
     DEFAULT_CACHE_SIZE,
     DEFAULT_ENCODER_MODEL,
     DEFAULT_JUDGE_BACKEND,
@@ -13,7 +13,7 @@ from pytest_mellea_semantic._constants import (
     DEFAULT_JUDGE_MODEL_OPTIONS,
     DEFAULT_THRESHOLD,
 )
-from pytest_mellea_semantic._embeddings import EmbeddingEncoder, OllamaEmbeddingBackend
+from pytest_mellea._embeddings import EmbeddingEncoder, OllamaEmbeddingBackend
 
 BackendName = Literal["ollama", "hf", "openai", "watsonx", "litellm"]
 

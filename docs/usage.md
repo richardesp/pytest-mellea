@@ -3,7 +3,7 @@
 Install the package in a project that already uses Mellea:
 
 ```bash
-uv add pytest-mellea-semantic
+uv add pytest-mellea
 ```
 
 Pull the default local models when using the default Ollama-backed runtime:
@@ -19,7 +19,7 @@ avoiding an additional judge-model download for an existing Mellea setup.
 Then write normal pytest assertions:
 
 ```python
-from pytest_mellea_semantic import Behavior, Content
+from pytest_mellea import Behavior, Content
 
 
 def test_redis_response(session):

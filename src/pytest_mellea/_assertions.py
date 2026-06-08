@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from typing import Any
 
-from pytest_mellea_semantic._constants import DEFAULT_JUDGE_MODEL_OPTIONS
-from pytest_mellea_semantic._embeddings import EmbeddingEncoder
-from pytest_mellea_semantic._runtime import (
+from pytest_mellea._constants import DEFAULT_JUDGE_MODEL_OPTIONS
+from pytest_mellea._embeddings import EmbeddingEncoder
+from pytest_mellea._runtime import (
     get_config,
     get_encoder,
     get_judge_session,

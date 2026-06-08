@@ -1,13 +1,13 @@
 import pytest
 
-import pytest_mellea_semantic._runtime as runtime
-from pytest_mellea_semantic._constants import (
+import pytest_mellea._runtime as runtime
+from pytest_mellea._constants import (
     DEFAULT_CACHE_SIZE,
     DEFAULT_ENCODER_MODEL,
     DEFAULT_JUDGE_MODEL,
     DEFAULT_THRESHOLD,
 )
-from pytest_mellea_semantic._runtime import (
+from pytest_mellea._runtime import (
     configure,
     get_config,
     get_encoder,
