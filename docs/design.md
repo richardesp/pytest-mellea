@@ -11,6 +11,6 @@ The package exposes two assertion dimensions:
 | Wrapper | Mechanism | Validates |
 | --- | --- | --- |
 | `Content` | Embedding cosine similarity | What the response says |
-| `Behaviour` | Mellea LLM-as-a-judge requirements | How the response behaves |
+| `Behavior` | Mellea LLM-as-a-judge requirements | How the response behaves |
 
 The pytest plugin only configures defaults and improves assertion output. The assertion objects can also be used directly outside pytest.

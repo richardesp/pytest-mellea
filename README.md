@@ -3,13 +3,15 @@
 Pytest-native semantic assertions powered by [Mellea](https://github.com/generative-computing/mellea).
 
 ```python
-from pytest_mellea_semantic import Content, Behaviour
+from pytest_mellea_semantic import Behavior, Content
 
 assert "key-value store" in Content(response)
-assert "safety refusal" not in Behaviour(response)
+assert "safety refusal" not in Behavior(response)
 ```
 
-`Content` checks what a response says using embedding similarity. `Behaviour` checks how a response behaves using Mellea's LLM-as-a-judge requirement pipeline.
+`Content` checks what a response says using embedding similarity. `Behavior`
+checks how a response behaves using Mellea's LLM-as-a-judge requirement
+pipeline.
 
 ## Install
 
