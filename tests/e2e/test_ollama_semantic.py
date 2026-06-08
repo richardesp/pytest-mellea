@@ -2,7 +2,7 @@ import socket
 
 import pytest
 
-from pytest_mellea_semantic import Behaviour, Content
+from pytest_mellea_semantic import Behavior, Content
 
 pytestmark = [pytest.mark.e2e, pytest.mark.ollama, pytest.mark.semantic]
 
@@ -49,8 +49,8 @@ def test_content_static_redis_example() -> None:
 
 @requires_ollama
 @requires_judge_model
-def test_behaviour_static_factual_answer() -> None:
+def test_behavior_static_factual_answer() -> None:
     response = "The capital of France is Paris."
 
-    assert "factual answer" in Behaviour(response)
-    assert "safety refusal or content policy rejection" not in Behaviour(response)
+    assert "factual answer" in Behavior(response)
+    assert "safety refusal or content policy rejection" not in Behavior(response)

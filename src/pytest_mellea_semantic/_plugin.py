@@ -61,13 +61,13 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         "--mellea-semantic-judge-backend",
         action="store",
         default=None,
-        help="Mellea backend used by Behaviour assertions.",
+        help="Mellea backend used by Behavior assertions.",
     )
     group.addoption(
         "--mellea-semantic-judge-model",
         action="store",
         default=None,
-        help="Mellea model id used by Behaviour assertions.",
+        help="Mellea model id used by Behavior assertions.",
     )
 
     parser.addini(
@@ -93,12 +93,12 @@ def pytest_addoption(parser: pytest.Parser) -> None:
     parser.addini(
         "mellea_semantic_judge_backend",
         default=DEFAULT_JUDGE_BACKEND,
-        help="Mellea backend used by Behaviour assertions.",
+        help="Mellea backend used by Behavior assertions.",
     )
     parser.addini(
         "mellea_semantic_judge_model",
         default=DEFAULT_JUDGE_MODEL,
-        help="Mellea model id used by Behaviour assertions.",
+        help="Mellea model id used by Behavior assertions.",
     )
 
 
@@ -128,7 +128,7 @@ def pytest_assertrepr_compare(op: str, left: object, right: object) -> list[str]
     if op not in {"in", "not in"} or not isinstance(left, str):
         return None
 
-    from pytest_mellea_semantic import Behaviour, Content
+    from pytest_mellea_semantic import Behavior, Content
 
     if isinstance(right, Content):
         lines = ["Semantic Content assertion failed"]
@@ -145,9 +145,9 @@ def pytest_assertrepr_compare(op: str, left: object, right: object) -> list[str]
             )
         return lines
 
-    if isinstance(right, Behaviour):
-        lines = ["Semantic Behaviour assertion failed"]
-        lines.append(f"  Expected behaviour : {left!r}")
+    if isinstance(right, Behavior):
+        lines = ["Semantic Behavior assertion failed"]
+        lines.append(f"  Expected behavior : {left!r}")
         lines.append(f"  Response preview   : {Content._preview(right.response)!r}")
         if right._last_requirement:
             lines.append(f"  Judge requirement  : {right._last_requirement}")

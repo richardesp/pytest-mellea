@@ -83,8 +83,8 @@ class Content:
         return clean if len(clean) <= limit else f"{clean[: limit - 3]}..."
 
 
-class Behaviour:
-    """Semantic behaviour assertion wrapper using Mellea LLM-as-a-judge.
+class Behavior:
+    """Semantic behavior assertion wrapper using Mellea LLM-as-a-judge.
 
     Args:
         response: LLM response text to validate.
@@ -100,7 +100,7 @@ class Behaviour:
         session: Any | None = None,
         model_options: dict[str, Any] | None = None,
     ) -> None:
-        """Initialize the behaviour assertion wrapper."""
+        """Initialize the behavior assertion wrapper."""
         self.response = response
         self.session = session
         self.model_options = {
@@ -112,10 +112,10 @@ class Behaviour:
         self._last_requirement: str | None = None
 
     def __contains__(self, expected: str) -> bool:
-        """Return whether the response exhibits the expected behaviour.
+        """Return whether the response exhibits the expected behavior.
 
         Args:
-            expected: Behaviour phrase to judge.
+            expected: Behavior phrase to judge.
 
         Returns:
             `True` when Mellea's judge requirement passes.
@@ -124,7 +124,7 @@ class Behaviour:
         from mellea.stdlib.requirements import LLMaJRequirement
 
         session = self.session or get_judge_session()
-        requirement_text = f'The response exhibits the behaviour "{expected}".'
+        requirement_text = f'The response exhibits the behavior "{expected}".'
         self._last_expected = expected
         self._last_requirement = requirement_text
         results = session.validate(
@@ -143,4 +143,4 @@ class Behaviour:
         Returns:
             Short representation with a truncated response preview.
         """
-        return f"Behaviour({Content._preview(self.response)!r})"
+        return f"Behavior({Content._preview(self.response)!r})"

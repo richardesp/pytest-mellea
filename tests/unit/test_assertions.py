@@ -1,6 +1,7 @@
 from typing import Any
 
-from pytest_mellea_semantic import Behaviour, Content, EmbeddingEncoder
+import pytest_mellea_semantic
+from pytest_mellea_semantic import Behavior, Content, EmbeddingEncoder
 from pytest_mellea_semantic._runtime import reset_runtime
 
 
@@ -62,24 +63,34 @@ def test_content_threshold_controls_match() -> None:
     assert "key-value store" not in content
 
 
-def test_behaviour_uses_mellea_requirement_pipeline() -> None:
-    session = FakeSession(result=True)
-    behaviour = Behaviour("Paris is the capital of France.", session=session)
+def test_public_api_exports_only_behavior_spelling() -> None:
+    legacy_name = "Behav" + "iour"
 
-    assert "factual answer" in behaviour
+    assert pytest_mellea_semantic.Behavior is Behavior
+    assert "Behavior" in pytest_mellea_semantic.__all__
+    assert legacy_name not in pytest_mellea_semantic.__all__
+    assert not hasattr(pytest_mellea_semantic, legacy_name)
+
+
+def test_behavior_uses_mellea_requirement_pipeline() -> None:
+    session = FakeSession(result=True)
+    behavior = Behavior("Paris is the capital of France.", session=session)
+
+    assert "factual answer" in behavior
 
     reqs, output, model_options = session.calls[0]
-    assert (
-        'The response exhibits the behaviour "factual answer".' in reqs[0].description
+    assert reqs[0].description == (
+        'The response exhibits the behavior "factual answer".'
     )
     assert output.value == "Paris is the capital of France."
     assert model_options == {"temperature": 0}
-    assert behaviour._last_reason == "judge said yes"
+    assert behavior._last_reason == "judge said yes"
+    assert repr(behavior) == "Behavior('Paris is the capital of France.')"
 
 
-def test_behaviour_negative_result() -> None:
+def test_behavior_negative_result() -> None:
     session = FakeSession(result=False)
 
-    assert "safety refusal" not in Behaviour(
+    assert "safety refusal" not in Behavior(
         "Paris is the capital of France.", session=session
     )
