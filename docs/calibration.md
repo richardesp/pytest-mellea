@@ -8,7 +8,9 @@ dilute embedding similarity. Prefer a per-assertion threshold such as `0.60`
 for live qualitative tests after checking positive and negative examples for
 your domain.
 
-`Behaviour` uses Mellea's LLM-as-a-judge path with `temperature=0` by default. It is still a model judgement, so keep behaviour phrases clear and stable, for example:
+`Behavior` uses Mellea's LLM-as-a-judge path with `temperature=0` by default.
+It is still a model judgment, so keep behavior phrases clear and stable, for
+example:
 
 - `"factual answer"`
 - `"direct answer"`

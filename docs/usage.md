@@ -19,7 +19,7 @@ avoiding an additional judge-model download for an existing Mellea setup.
 Then write normal pytest assertions:
 
 ```python
-from pytest_mellea_semantic import Content, Behaviour
+from pytest_mellea_semantic import Behavior, Content
 
 
 def test_redis_response(session):
@@ -27,9 +27,10 @@ def test_redis_response(session):
 
     assert "key-value store" in Content(response, threshold=0.60)
     assert "machine learning" not in Content(response, threshold=0.60)
-    assert "factual answer" in Behaviour(response)
-    assert "safety refusal" not in Behaviour(response)
+    assert "factual answer" in Behavior(response)
+    assert "safety refusal" not in Behavior(response)
 ```
 
 `Content` validates what the response says using embedding similarity.
-`Behaviour` validates how the response behaves using Mellea's LLM-as-a-judge requirement pipeline.
+`Behavior` validates how the response behaves using Mellea's LLM-as-a-judge
+requirement pipeline.

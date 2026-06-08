@@ -28,8 +28,8 @@ class SemanticConfig:
         cache_size: Maximum embeddings held by the shared encoder. Zero disables
             caching.
         ollama_host: Optional Ollama host for the embedding client.
-        judge_backend: Mellea backend name for `Behaviour`.
-        judge_model: Mellea model id for `Behaviour`.
+        judge_backend: Mellea backend name for `Behavior`.
+        judge_model: Mellea model id for `Behavior`.
 
     Raises:
         ValueError: If `cache_size` is negative.
@@ -123,7 +123,7 @@ def get_judge_session() -> Any:
     """Return the lazily-created default Mellea judge session.
 
     Returns:
-        Shared Mellea session for behaviour assertions.
+        Shared Mellea session for behavior assertions.
     """
     global _judge_session
     if _judge_session is None:

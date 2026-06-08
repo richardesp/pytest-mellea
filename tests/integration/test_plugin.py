@@ -151,3 +151,36 @@ def test_plugin_assertion_output_for_content(pytester: Pytester) -> None:
 
     result.assert_outcomes(failed=1)
     result.stdout.fnmatch_lines(["*Semantic Content assertion failed*"])
+
+
+def test_plugin_assertion_output_for_behavior(pytester: Pytester) -> None:
+    make_child_ini(pytester)
+    pytester.makepyfile(
+        """
+        from pytest_mellea_semantic import Behavior
+
+        class Result:
+            reason = "judge said no"
+
+            def __bool__(self):
+                return False
+
+        class Session:
+            def validate(self, reqs, *, output, model_options):
+                return [Result()]
+
+        def test_failure():
+            behavior = Behavior("response", session=Session())
+            assert "direct answer" in behavior
+        """
+    )
+
+    result = pytester.runpytest()
+
+    result.assert_outcomes(failed=1)
+    result.stdout.fnmatch_lines(
+        [
+            "*Semantic Behavior assertion failed*",
+            "*Expected behavior : 'direct answer'*",
+        ]
+    )
