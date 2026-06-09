@@ -65,8 +65,9 @@ is `--mellea-semantic-cache-size`, and the environment variable is
 `MELLEA_SEMANTIC_CACHE_SIZE`.
 
 Shared runtime configuration precedence is CLI, environment, pytest ini, then
-package defaults. A custom encoder can set its own capacity independently and
-clear cached entries without changing its backend or configuration:
+package defaults. CLI flags therefore override matching `MELLEA_SEMANTIC_*`
+environment variables. A custom encoder can set its own capacity independently
+and clear cached entries without changing its backend or configuration:
 
 ```python
 from pytest_mellea import EmbeddingEncoder
