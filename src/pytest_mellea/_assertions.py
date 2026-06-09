@@ -45,9 +45,10 @@ class Content:
         Returns:
             `True` when similarity is greater than or equal to the active threshold.
         """
+        self._last_expected = expected
+        self._last_similarity = None
         encoder = self.encoder or get_encoder()
         threshold = self.active_threshold
-        self._last_expected = expected
         self._last_similarity = encoder.similarity(self.response, expected)
         return self._last_similarity >= threshold
 
@@ -120,12 +121,15 @@ class Behavior:
         Returns:
             `True` when Mellea's judge requirement passes.
         """
+        self._last_expected = expected
+        self._last_requirement = None
+        self._last_reason = None
+
         from mellea.core import ModelOutputThunk
         from mellea.stdlib.requirements import LLMaJRequirement
 
         session = self.session or get_judge_session()
         requirement_text = f'The response exhibits the behavior "{expected}".'
-        self._last_expected = expected
         self._last_requirement = requirement_text
         results = session.validate(
             [LLMaJRequirement(requirement_text)],
