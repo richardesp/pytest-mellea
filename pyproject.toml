@@ -56,8 +56,6 @@ asyncio_default_fixture_loop_scope = "function"
 addopts = [
     "--strict-markers",
     "--strict-config",
-    "--cov=pytest_mellea",
-    "--cov-report=term-missing",
 ]
 markers = [
     "semantic: tests using pytest-mellea assertions",
