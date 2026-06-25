@@ -3,15 +3,15 @@ python = "3.13"
 uv = "0.6.2"
 
 # ---------------------------
-# Local setup
+# uv environment
 # ---------------------------
 
-[tasks.setup]
+[tasks."uv:sync"]
 description = "Create/update the project virtual env and install main+dev deps (uv sync --dev)"
 run = "uv sync --dev"
-depends = ["setup:git-hooks"]
+depends = ["git-hooks:install"]
 
-[tasks.clean]
+[tasks."uv:clean"]
 description = "Remove build artifacts and caches (dist/, build/, .pytest_cache/, .mypy_cache/, __pycache__)"
 run = """
 rm -rf dist build .pytest_cache .mypy_cache .coverage htmlcov || true
@@ -22,71 +22,73 @@ find . -type d -name __pycache__ -prune -exec rm -rf {} +
 # Linting / formatting / typing
 # ---------------------------
 
-[tasks.lint]
-description = "Ruff lint (with autofix) across src/ and tests/"
-depends = ["setup"]
-run = "uv run ruff check --fix src tests"
+[tasks."lint:fix"]
+description = "Apply Ruff autofixes and formatting across src/ and tests/"
+depends = ["uv:sync"]
+run = """
+uv run ruff format src tests
+uv run ruff check --fix src tests
+"""
 
-[tasks.format]
-description = "Ruff code formatter (apply changes) across src/ and tests/"
-depends = ["setup"]
-run = "uv run ruff format src tests"
+[tasks."lint:check"]
+description = "Ruff lint + format check (no changes) across src/ and tests/"
+depends = ["uv:sync"]
+run = """
+uv run ruff format --check src tests
+uv run ruff check src tests
+"""
 
-[tasks.format-check]
-description = "Ruff code formatter (check only, no changes) across src/ and tests/"
-depends = ["setup"]
-run = "uv run ruff format --check src tests"
-
-[tasks."lint-check"]
-description = "Ruff lint (no autofix)"
-depends = ["setup"]
-run = "uv run ruff check src tests"
-
-[tasks.typecheck]
+[tasks."lint:types"]
 description = "Static type checking with mypy across src/ and tests/"
-depends = ["setup"]
+depends = ["uv:sync"]
 run = "uv run mypy --show-error-context --pretty src tests"
 
-[tasks.style]
-description = "Apply Ruff autofixes and formatting (lint + format)"
-depends = ["lint", "format"]
-
-[tasks.check]
-description = "CI-style verification: lint (no fix), format check, and mypy"
-depends = ["lint-check", "format-check", "typecheck"]
+[tasks."lint:all"]
+description = "CI-style verification: lint check, format check, and mypy"
+depends = ["lint:check", "lint:types"]
 
 # ---------------------------
 # Tests
 # ---------------------------
 
-[tasks.tests]
+[tasks."tests:run"]
 description = "Run the full test suite with pytest"
-depends = ["setup"]
+depends = ["uv:sync"]
 run = "uv run pytest"
 
-[tasks."tests-cov"]
+[tasks."tests:cov"]
 description = "Run the full test suite with coverage report"
-depends = ["setup"]
+depends = ["uv:sync"]
 run = "uv run pytest --cov=pytest_mellea --cov-report=term-missing"
 
 # ---------------------------
-# Build / packaging
+# Release / packaging
 # ---------------------------
 
-[tasks.build]
+[tasks."release:build"]
 description = "Build wheel and sdist into dist/ (uv build)"
-depends = ["setup"]
+depends = ["uv:sync"]
 run = "uv build"
 
-[tasks.wheel]
+[tasks."release:wheel"]
 description = "Build wheel only"
-depends = ["setup"]
+depends = ["uv:sync"]
 run = "uv build --wheel"
 
-[tasks.sdist]
+[tasks."release:sdist"]
 description = "Build source distribution only"
-depends = ["setup"]
+depends = ["uv:sync"]
 run = "uv build --sdist"
+
+[tasks."release:publish"]
+description = "Publish the built dist/ to PyPI (requires UV_PUBLISH_TOKEN)"
+depends = ["release:build"]
+run = "uv publish"
+
+[tasks."release:publish-test"]
+description = "Publish the built dist/ to TestPyPI for a dry run (requires UV_PUBLISH_TOKEN)"
+depends = ["release:build"]
+run = "uv publish --publish-url https://test.pypi.org/legacy/"
 
 # ---------------------------
 # Git hooks
@@ -94,13 +96,13 @@ run = "uv build --sdist"
 
 [tasks."git-hooks:pre-commit"]
 description = "Run style and type checks before each commit"
-depends = ["check"]
+depends = ["lint:all"]
 
 [tasks."git-hooks:pre-push"]
 description = "Run tests before pushing"
-depends = ["tests"]
+depends = ["tests:run"]
 
-[tasks."setup:git-hooks"]
+[tasks."git-hooks:install"]
 description = "Install pre-commit and pre-push git hooks"
 run = """
 #!/bin/bash
