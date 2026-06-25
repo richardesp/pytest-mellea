@@ -24,7 +24,7 @@ For local development:
 ```bash
 git clone https://github.com/generative-computing/pytest-mellea.git
 cd pytest-mellea
-mise run setup
+mise run uv:sync
 ```
 
 ## Default local models
@@ -85,9 +85,9 @@ The pre-commit and pre-push flow is handled directly by the tasks in
 [mise.toml](mise.toml).
 
 ```bash
-mise run check
-mise run tests
-mise run build
+mise run lint:all
+mise run tests:run
+mise run release:build
 ```
 
-`mise run setup` installs native `.git/hooks/pre-commit` and `.git/hooks/pre-push` scripts.
+`mise run uv:sync` installs native `.git/hooks/pre-commit` and `.git/hooks/pre-push` scripts.
